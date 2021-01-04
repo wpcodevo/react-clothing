@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { withRouter } from "react-router-dom";
 
 const Content = styled.div`
   position: absolute;
@@ -13,6 +14,7 @@ const Content = styled.div`
   z-index: 1;
   background-color: #fff;
   opacity: 0.7;
+  transition: all 600ms ease-in-out;
 `;
 
 const Title = styled.h1`
@@ -63,11 +65,18 @@ const MenuItemWrapper = styled.div`
     ${BackgroundImage} {
       transform: scale(1.1);
     }
+
+    ${Content} {
+      opacity: 1;
+    }
   }
 `;
 
-const MenuItem = ({ title, imageUrl, size }) => (
-  <MenuItemWrapper className={size}>
+const MenuItem = ({ title, imageUrl, size, history, linkUrl, match }) => (
+  <MenuItemWrapper
+    className={size}
+    onClick={() => history.push(`${match.url}${linkUrl}`)}
+  >
     <BackgroundImage
       style={{ background: `url(${imageUrl}) center/cover no-repeat` }}
     ></BackgroundImage>
@@ -78,4 +87,4 @@ const MenuItem = ({ title, imageUrl, size }) => (
   </MenuItemWrapper>
 );
 
-export default MenuItem;
+export default withRouter(MenuItem);
